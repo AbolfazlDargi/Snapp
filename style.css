@@ -1,0 +1,259 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+.navbar {
+  background-color: white;
+  position: sticky;
+  flex-direction: row-reverse;
+  top: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: end;
+  gap: 1.5rem;
+  padding: 2rem;
+  margin-right: 12rem;
+  font-size: 95%;
+}
+.navbar a {
+  font-size: 16px;
+  margin: 10px 10px;
+  text-align: end;
+  text-decoration: none;
+  color: #3F3F3F;
+}
+
+.navbar a:hover{
+  color: #00D170;
+  font-weight: 700;
+  text-decoration: none solid rgb(0, 209, 112);
+  text-align: right;
+}
+
+ .navbar-container{
+  position: relative;
+  display: inline-block;
+  font-family: sans-serif;
+}
+
+.navbar-one{
+  background-color: white;
+  border-radius: 5px;
+  display: inline-block;
+} 
+
+.dropdown-menu{
+  display: none;
+  position: absolute;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  min-width: 150px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 10000;
+}
+
+.dropdown-menu a {
+  display: block;
+  padding: 1px ;
+  color: #333;
+  text-decoration: none; 
+}
+
+.dropdown-menu a:hover {
+  background-color: #f5f5f5;
+}
+
+.navbar-container:hover .dropdown-menu {
+  display: block;
+}
+
+.h2Container {    .navbar-container {
+  position: relative;
+  display: inline-block;
+  font-family: sans-serif;
+}
+
+.navbar-one {
+  cursor: pointer;
+  padding: 10px 20px;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  display: inline-block;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 40px;
+  right: 0;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  min-width: 150px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.dropdown-menu a {
+  display: block;
+  padding: 10px 15px;
+  color: #3F3F3F;
+  text-decoration: none;
+}
+
+.dropdown-menu a:hover {
+  background-color: #f5f5f5;
+}
+
+.navbar-container:hover .dropdown-menu {
+  display: block;
+}
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  color: white;
+  text-align: right;
+  font-weight: 700;
+}
+
+.pContainer {
+  color: white;
+  text-align: right;
+}
+
+.input {
+  font-size: 14px;
+  line-height: 48px;
+  text-align: right;
+  vertical-align: middle;
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 40px;
+}
+
+.inputcontainer{
+  display: flex;
+  flex-grow: 0.2;
+  align-self: stretch;
+  align-items: center;
+  flex-direction: row;
+  background-color: #21aa58;
+  color: white;
+  text-align: right;
+  border: none;
+  border-bottom: 1px solid white;
+  
+}
+
+.inputcontainer::placeholder{
+  color: #E4E5E8;
+}
+
+.inputcontainer:focus{
+  outline: none;
+}
+
+.button {
+  cursor: pointer;
+  display: flex;
+  justify-content: start;
+  margin-left: 40rem;
+  background-color: #21aa58;
+  outline: none;
+  border: 1px solid white;
+  color: white;
+  font-weight: 900;
+  font-size: 18px;
+  width: 300px;
+  height: 48px;
+  padding: 1px 41px 10px;
+  text-align: center;
+}
+
+
+.button:hover{
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+}
+
+.button:active{
+  background-color: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(5px);
+}
+
+.buttonContainer2 {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  margin-bottom: 30px;
+  text-align: center;
+  height: 40px;
+  text-align: center;
+}
+
+.buttonContainer {
+  background-color: white;
+  color: #00D170;
+  border: 1px solid;
+  font-weight: 700 !important;
+  border-radius: 5px;
+  width: 140px;
+  height: 40px;
+}
+
+.containerMain {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: center;
+  width: 100%;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  background-color: #21aa58;
+  height: 27.7rem;
+}
+
+.containerNext {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  margin-right: 9rem;
+}
+
+.containerLeft {
+  font-size: 20px;
+  display: flex;
+  flex-direction: column;
+  text-align: end;
+}
+
+.imglinker {
+  width: 70vw;
+  height: 23vw;
+}
+
+
+.main {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 110px;
+}
+
+.titlelist{
+  display: flex;
+  justify-content: center;
+  color: #404040;
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 52px;
+  text-decoration: rgb(64, 64, 64);
+}
+
+.borderlist{
+  background-color: #F2F5F8;
+}

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اسلایدر تصاویر</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* Light gray background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow: hidden; /* Prevent body scroll from slider overflow */
+        }
+        .slider-container {
+            position: relative;
+            width: 90%; /* Responsive width */
+            max-width: 960px; /* Max width for larger screens */
+            overflow: hidden; /* Hide images outside the view */
+            border-radius: 1rem; /* Rounded corners */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); /* Soft shadow */
+            background-color: white;
+            cursor: grab; /* Indicate that the element is draggable */
+        }
+        .slider-container:active {
+            cursor: grabbing; /* Change cursor when dragging */
+        }
+        .slider-track {
+            display: flex; /* Arrange images horizontally */
+            transition: transform 0.5s ease-in-out; /* Smooth sliding animation */
+            width: 100%; /* Will be adjusted by JS */
+        }
+        .slider-track img {
+            width: 100%; /* Each image takes full width of the container */
+            flex-shrink: 0; /* Prevent images from shrinking */
+            height: auto; /* Maintain aspect ratio */
+            object-fit: cover; /* Cover the area, cropping if necessary */
+            border-radius: 1rem; /* Rounded corners for images */
+            padding: 0.5rem; /* Small padding between images and container edge */
+            pointer-events: none; /* Prevent image dragging default behavior */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="slider-container">
+        <div class="slider-track">
+            <img src="https://placehold.co/960x400/FF5733/FFFFFF?text=تصویر+۱" alt="تصویر ۱">
+            <img src="https://placehold.co/960x400/33FF57/FFFFFF?text=تصویر+۲" alt="تصویر ۲">
+            <img src="https://placehold.co/960x400/3357FF/FFFFFF?text=تصویر+۳" alt="تصویر ۳">
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sliderTrack = document.querySelector('.slider-track');
+            const images = document.querySelectorAll('.slider-track img');
+
+            let currentIndex = 0;
+            const totalImages = images.length;
+            let slideWidth = 0; // Will be set after images load
+
+            // Variables for dragging
+            let isDragging = false;
+            let startPos = 0;
+            let currentTranslate = 0;
+            let prevTranslate = 0;
+
+            // Function to update the slider's position
+            function updateSlider() {
+                // Calculate the translation based on the current index and slide width
+                // For RTL, we translate positively to move to the previous image, and negatively for the next
+                sliderTrack.style.transform = `translateX(${currentIndex * slideWidth}px)`;
+            }
+
+            // Function to get the correct X position from mouse or touch event
+            function getPositionX(event) {
+                return event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
+            }
+
+            // --- Mouse Drag Functionality ---
+            sliderTrack.addEventListener('mousedown', (e) => {
+                isDragging = true;
+                startPos = getPositionX(e);
+                // Calculate prevTranslate based on current visual position
+                prevTranslate = parseFloat(getComputedStyle(sliderTrack).transform.split(',')[5] || 0);
+                sliderTrack.style.transition = 'none'; // Temporarily remove transition for dragging
+                e.preventDefault(); // Prevent image dragging default behavior
+            });
+
+            sliderTrack.addEventListener('mousemove', (e) => {
+                if (!isDragging) return;
+                const currentPosition = getPositionX(e);
+                // Calculate currentTranslate based on drag distance
+                currentTranslate = prevTranslate + (currentPosition - startPos);
+                sliderTrack.style.transform = `translateX(${currentTranslate}px)`;
+            });
+
+            sliderTrack.addEventListener('mouseup', () => {
+                if (!isDragging) return;
+                isDragging = false;
+                sliderTrack.style.transition = 'transform 0.5s ease-in-out'; // Re-apply transition
+
+                const movedBy = currentTranslate - prevTranslate; // How much the user dragged
+                const threshold = slideWidth / 4; // Threshold for changing slides
+
+                // Determine the new slide based on drag direction and distance
+                if (movedBy > threshold && currentIndex > 0) { // Dragged right (to previous image in RTL)
+                    currentIndex--;
+                } else if (movedBy < -threshold && currentIndex < totalImages - 1) { // Dragged left (to next image in RTL)
+                    currentIndex++;
+                }
+                updateSlider(); // Snap to the correct slide
+            });
+
+            sliderTrack.addEventListener('mouseleave', () => {
+                // If mouse leaves while dragging, treat it as mouseup
+                if (isDragging) {
+                    isDragging = false;
+                    sliderTrack.style.transition = 'transform 0.5s ease-in-out';
+                    updateSlider();
+                }
+            });
+
+            // --- Touch Swipe Functionality (for mobile devices) ---
+            sliderTrack.addEventListener('touchstart', (e) => {
+                isDragging = true;
+                startPos = getPositionX(e);
+                prevTranslate = parseFloat(getComputedStyle(sliderTrack).transform.split(',')[5] || 0);
+                sliderTrack.style.transition = 'none';
+            });
+
+            sliderTrack.addEventListener('touchmove', (e) => {
+                if (!isDragging) return;
+                const currentPosition = getPositionX(e);
+                currentTranslate = prevTranslate + (currentPosition - startPos);
+                sliderTrack.style.transform = `translateX(${currentTranslate}px)`;
+            });
+
+            sliderTrack.addEventListener('touchend', () => {
+                if (!isDragging) return;
+                isDragging = false;
+                sliderTrack.style.transition = 'transform 0.5s ease-in-out';
+
+                const movedBy = currentTranslate - prevTranslate;
+                const threshold = slideWidth / 4;
+
+                if (movedBy > threshold && currentIndex > 0) {
+                    currentIndex--;
+                } else if (movedBy < -threshold && currentIndex < totalImages - 1) {
+                    currentIndex++;
+                }
+                updateSlider();
+            });
+
+            // Recalculate slideWidth on window resize
+            window.addEventListener('resize', () => {
+                if (images.length > 0) {
+                    slideWidth = images[0].clientWidth;
+                    updateSlider(); // Adjust slider position based on new width
+                }
+            });
+
+            // Initial setup after images are loaded to get correct width
+            window.addEventListener('load', () => {
+                if (images.length > 0) {
+                    slideWidth = images[0].clientWidth;
+                    updateSlider();
+                }
+            });
+
+            // Ensure initial setup if images are already cached
+            if (images.length > 0 && images[0].complete) {
+                slideWidth = images[0].clientWidth;
+                updateSlider();
+            }
+        });
+    </script>
+</body>
+</html>
